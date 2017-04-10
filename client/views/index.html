@@ -3,55 +3,60 @@
 <head>
   <meta charset="utf-8">
   <title>Movie Search</title>
+  <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <script src="vendors/angular/angular.min.js" charset="utf-8"></script>
+  <script src="scripts/client.min.js" charset="utf-8"></script>
+
 </head>
 <body>
   <div class="container">
-      <div class="row">
-    <div ng-controller="OneController" class="col-sm-6">
-      <h2>Find a Movie!</h2>
-      <form>
-        <div class="form">
-          <input class="form-control" type="text" placeholder="Title" ng-model="movie.searchMovie">
-        </div>
-        <button type="button" class="btn btn-default" ng-click="findMovie(movie); clear()">Search Movie</button>
-      </form>
-      <hr>
-      <div ng-controller="TwoController">
-        <h2>Results:</h2>
+    <div class="row">
+      <div ng-controller="OneController" class="col-sm-6">
+        <h2>Find a Movie!</h2>
+        <form>
+          <div class="form">
+            <input class="form-control" type="text" placeholder="Title" ng-model="movie.searchMovie">
+          </div>
+          <button type="button" class="btn btn-default" ng-click="findMovie(movie); clear()">Search Movie</button>
+        </form>
+        <hr>
+        <div ng-controller="TwoController">
+          <h2>Results:</h2>
 
-        <p><em>Title: </em>{{searchResults.movie.title}}</p>
-        <p><em>Director: </em>{{searchResults.movie.director}}</p>
-        <p><em>Runtime: </em>{{searchResults.movie.runtime}}</p>
-        <p><em>Year: </em>{{searchResults.movie.year}}</p>
-        <p><em>Description: </em>{{searchResults.movie.description}}</p>
-        <button class="btn btn-default" ng-click="saveMovie(MovieServices)">Add to Favorites</button>
+          <p><em>Title: </em>{{searchResults.movie.title}}</p>
+          <p><em>Director: </em>{{searchResults.movie.director}}</p>
+          <p><em>Runtime: </em>{{searchResults.movie.runtime}}</p>
+          <p><em>Year: </em>{{searchResults.movie.year}}</p>
+          <p><em>Description: </em>{{searchResults.movie.description}}</p>
+          <button class="btn btn-default" ng-click="saveMovie(MovieServices)">Add to Favorites</button>
+        </div>
+      </div>
+      <div ng-controller="SaveFavController" class="col-sm-6" id="savedDiv">
+        <h2>Saved Movies</h2>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Director</th>
+              <th>Runtime</th>
+              <th>Year</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="movie in movieListFav.movieList">
+              <td> {{ movie.title }}</td>
+              <td> {{ movie.director }}</td>
+              <td> {{ movie.runtime }}</td>
+              <td> {{ movie.year }}</td>
+              <td> {{ movie.description }}</td>
+              <td> <button class="btn btn-default btn-sm" ng-click="removeFav($index)">Remove</button></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <div ng-controller="SaveFavController" class="col-sm-6" id="savedDiv">
-      <h2>Saved Movies</h2>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Director</th>
-            <th>Runtime</th>
-            <th>Year</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="movie in movieListFav.movieList">
-            <td> {{ movie.title }}</td>
-            <td> {{ movie.director }}</td>
-            <td> {{ movie.runtime }}</td>
-            <td> {{ movie.year }}</td>
-            <td> {{ movie.description }}</td>
-            <td> <button class="btn btn-default btn-sm" ng-click="removeFav($index)">Remove</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
-    </div>
 </body>
 </html>
