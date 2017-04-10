@@ -20,8 +20,6 @@ myApp.controller('SaveFavController', ['$scope', 'MovieServices', 'SearchingServ
   $scope.removeFavorite = SearchingService.removeFavorite;
 }]);
 
-//=======================================Factories=======================================//
-
 myApp.factory('MovieServices', ['$http', function($http){
   var movie = {
     searchMovie: '',
