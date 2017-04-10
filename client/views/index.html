@@ -5,6 +5,8 @@
   <title>Movie Search</title>
   <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.css" />
   <link rel="stylesheet" href="stylesheets/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
   <script src="vendors/angular/angular.min.js" charset="utf-8"></script>
   <script src="scripts/client.min.js" charset="utf-8"></script>
 
@@ -23,7 +25,8 @@
         <hr>
         <div ng-controller="TwoController">
           <h2>Results:</h2>
-
+          <img ng-src={{searchResults.movie.Poster}} id="poster">
+          <br>
           <p><em>Title: </em>{{searchResults.movie.title}}</p>
           <p><em>Director: </em>{{searchResults.movie.director}}</p>
           <p><em>Runtime: </em>{{searchResults.movie.runtime}}</p>
