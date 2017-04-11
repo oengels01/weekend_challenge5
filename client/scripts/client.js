@@ -8,11 +8,11 @@ myApp.controller('TwoController', ['$scope', 'MovieServices', function($scope, M
   $scope.movieFromServer = MovieServices.movieFromServer;
   $scope.movie = {};
 
-  $scope.addFavorite = function(){
+  $scope.saveMovieFav = function(){
   $scope.movie = angular.copy($scope.movieFromServer.response.data);
-
-  MovieServices.addFavorite($scope.movie);
-  MovieServices.clearMovie(MovieServices.movieFromServer);
+// MovieServices.saveMovie($scope.movie);
+  MovieServices.saveMovie($scope.movie);
+  MovieServices.removeFavorite(MovieServices.movieFromServer);
   };
 }]);
 
@@ -41,7 +41,7 @@ myApp.factory('MovieServices', ['$http', function($http){
 },
 
  saveMovie : function (newMovie) {
-    favMovie.push(movie);
+    favMovie.push(newMovie);
     console.log(favMovie);
   },
 
