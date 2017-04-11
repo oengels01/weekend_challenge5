@@ -4,62 +4,74 @@
   <meta charset="utf-8">
   <title>Movie Search</title>
   <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.css" />
-  <link rel="stylesheet" href="stylesheets/styles.css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css" />
 
-  <script src="vendors/angular/angular.min.js" charset="utf-8"></script>
-  <script src="scripts/client.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="vendors/angular/angular.min.js"></script>
+  <script type="text/javascript" src="scripts/client.min.js"></script>
 
 </head>
 <body>
   <div class="container">
     <div class="row">
       <div ng-controller="OneController" class="col-sm-6">
-        <h2>Find a Movie!</h2>
-        <form>
-          <div class="form">
-            <input class="form-control" type="text" placeholder="Title" ng-model="movie.searchMovie">
+        <input type="text" ng-model="moviename">
+        <button class="btn btn-movie" ng-click="getMovie(moviename)">Search Movie</button>
+
+        <div class="row">
+          <!-- <div ng-controller="TwoController" class="col-sm-6">
+            <input class="form-control" type="text" placeholder="Title" ng-model="movie.movieFromServer">
+            <button type="button" class="btn btn-success" ng-show="movieFromServer.response.data" ng-click="saveMovie()">Favorite</button>
+          </div> -->
+
+          <div ng-controller="TwoController">
+            <h2>Results</h2>
+            <div class="movie">
+              <div ng-show="movieFromServer.response.data" class="well">
+                <img ng-src="{{movieFromServer.response.data.Poster}}" />
+                <p><em>Title: </em>{{ movieFromServer.response.data.title }</p>
+                <p><em>Director: </em>{{ movieFromServer.response.data.director }}</p>
+                <p><em>Runtime: </em>{{ movieFromServer.response.data.runtime }}</p>
+                <p><em>Year: </em>{ movieFromServer.response.data.year }}</p>
+                <p><em>Description: </em>{{ movieFromServer.response.data.description }}</p>
+                <button class="btn btn-success" ng-show="movieFromServer.response.data" ng-click="saveMovie()">Add to Favorites</button>
+              </div>
+            </div>
           </div>
-          <button type="button" class="btn btn-default" ng-click="findMovie(movie); clear()">Search Movie</button>
-        </form>
-        <hr>
-        <div ng-controller="TwoController">
-          <h2>Results:</h2>
-          <img ng-src={{searchResults.movie.Poster}} id="poster">
-          <br>
-          <p><em>Title: </em>{{searchResults.movie.title}}</p>
-          <p><em>Director: </em>{{searchResults.movie.director}}</p>
-          <p><em>Runtime: </em>{{searchResults.movie.runtime}}</p>
-          <p><em>Year: </em>{{searchResults.movie.year}}</p>
-          <p><em>Description: </em>{{searchResults.movie.description}}</p>
-          <button class="btn btn-default" ng-click="saveMovie(MovieServices)">Add to Favorites</button>
+            <div ng-controller="SaveFavController" class="col-sm-6">
+              <h2 class="text-center lead"> Favorites Movies </h2>
+              <div ng-repeat="movie in favMovie track by $index">
+                <div class="well">
+                  <img style="height: 60px" ng-src="{{movie.Poster}}" />
+                  <span class="lead"> {{ '  ' + movie.Title }} </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div ng-controller="SaveFavController" class="col-sm-6" id="savedDiv">
-        <h2>Saved Movies</h2>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Director</th>
-              <th>Runtime</th>
-              <th>Year</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="movie in movieListFav.movieList">
-              <td> {{ movie.title }}</td>
-              <td> {{ movie.director }}</td>
-              <td> {{ movie.runtime }}</td>
-              <td> {{ movie.year }}</td>
-              <td> {{ movie.description }}</td>
-              <td> <button class="btn btn-default btn-sm" ng-click="removeFav($index)">Remove</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
-  </div>
+
 </body>
 </html>
+
+<!-- <table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Director</th>
+      <th>Runtime</th>
+      <th>Year</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="movie in favMovie.movieFromServer">
+      <td> {{ movieFromServer.response.data.title }}</td>
+      <td> {{ movieFromServer.response.data.director }}</td>
+      <td> {{ movieFromServer.response.data.runtime }}</td>
+      <td> {{ movieFromServer.response.data.year }}</td>
+      <td> {{ movieFromServer.response.data.description }}</td>
+      <td> <button class="btn btn-success btn-md" ng-click="removeFavorite($index)">Remove</button></td>
+    </tr>
+  </tbody>
+</table> -->

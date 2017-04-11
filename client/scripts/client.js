@@ -1,77 +1,52 @@
 var myApp = angular.module('myApp', []);
 
 myApp.controller('OneController', ['$scope', 'MovieServices', function($scope, MovieServices){
-  $scope.movie = MovieServices.movie;
-  $scope.findMovie = MovieServices.findMovie;
-  $scope.clear = function() {
-    $scope.movie = {};
+  $scope.getMovie = MovieServices.getMovie;
+}]);
+
+myApp.controller('TwoController', ['$scope', 'MovieServices', function($scope, MovieServices){
+  $scope.movieFromServer = MovieServices.movieFromServer;
+  $scope.movie = {};
+
+  $scope.addFavorite = function(){
+  $scope.movie = angular.copy($scope.movieFromServer.response.data);
+
+  MovieServices.addFavorite($scope.movie);
+  MovieServices.clearMovie(MovieServices.movieFromServer);
   };
 }]);
 
-myApp.controller('TwoController', ['$scope', 'MovieServices', 'SearchingService', function($scope, MovieServices, SearchingService){
-  $scope.searchResults = MovieServices.searchResults;
-  $scope.saveMovie = SearchingService.saveMovie;
-}]);
 
-myApp.controller('SaveFavController', ['$scope', 'MovieServices', 'SearchingService', function($scope, MovieServices, SearchingService){
-  $scope.movieListFav = SearchingService.movieListFav;
-  SearchingService.showSavedMovies();
-  console.log('searched movie');
-  $scope.removeFavorite = SearchingService.removeFavorite;
+myApp.controller('SaveFavController', ['$scope', 'MovieServices', function($scope, MovieServices){
+  $scope.favMovie = MovieServices.favMovie;
 }]);
-
 myApp.factory('MovieServices', ['$http', function($http){
-  var movie = {
-    searchMovie: '',
-  };
-  var searchResults = {};
-  function findMovie(movie){
-    var copy = angular.copy[movie];
-    $http.get('http://www.omdbapi.com/?t=' + movie.searchMovie).then(function(response) {
-      searchResults.movie = response.data;
-    });
-  }
+  var movieFromServer = {};
+  var favMovie = [];
+
   return {
-    movie : movie,
-    findMovie : findMovie,
-    searchResults : searchResults
-  };
-}]);
+    movieFromServer : movieFromServer,
+    favMovie : favMovie,
+    getRequest : function(){
+    $http.get('/movie').then(function(response){
+      movieFromServer.response = response;
+  });
+},
 
+ getMovie : function (movie){
+  $http.get('http://www.omdbapi.com/?t=' + movie + '&y=&plot=full&r=json').then(function(response){
+    movieFromServer.response = response;
+    console.log(movieFromServer.response.data);
+  });
+},
 
-myApp.factory('SearchingService', ['$http', function($http){
-  var movieList = [];
-  var movieListFav = {
-    movieList: movieList
-  };
+ saveMovie : function (newMovie) {
+    favMovie.push(movie);
+    console.log(favMovie);
+  },
 
-  function showSavedMovies() {
-    $http.get('/movies').then(function(response) {
-      movieListFav.movieList = response.data;
-      console.log('movie is showing: ', movieListFav.movieList);
-      });
-    }//end showSavedMovies
-
-  function saveMovie(newMovie) {
-    var copy = angular.copy[newMovie];
-    $http.post('/movies', newMovie.movie).then(function() {
-      showSavedMovies();
-      });
-    }//end saveMovie
-
-  function removeFavorite(index) {
-    console.log(index);
-    var removeID = movieListFav.movieList[index]._id;
-    console.log(removeID);
-    $http.delete('/movies/'+removeID).then(function() {
-      showSavedMovies();
-    });
+ removeFavorite : function (movie) {
+  movieFromServer.response = null;
     }
-
-  return{
-    saveMovie : saveMovie,
-    showSavedMovies : showSavedMovies,
-    movieListFav : movieListFav,
-    removeFavorite : removeFavorite
   };
 }]);

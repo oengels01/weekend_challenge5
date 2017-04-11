@@ -20,5 +20,13 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oengels01/weekend_challenge5.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oengels01/weekend_challenge5/issues"
+  },
+  "homepage": "https://github.com/oengels01/weekend_challenge5#readme",
   "description": ""
 }
