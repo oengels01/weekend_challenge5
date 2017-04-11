@@ -28,11 +28,11 @@
             <div class="movie">
               <div ng-show="movieFromServer.response.data" class="well">
                 <img ng-src="{{movieFromServer.response.data.Poster}}" />
-                <p><em>Title: </em>{{ movieFromServer.response.data.title }</p>
-                <p><em>Director: </em>{{ movieFromServer.response.data.director }}</p>
-                <p><em>Runtime: </em>{{ movieFromServer.response.data.runtime }}</p>
-                <p><em>Year: </em>{ movieFromServer.response.data.year }}</p>
-                <p><em>Description: </em>{{ movieFromServer.response.data.description }}</p>
+                <p><em>Title: </em>{{ movieFromServer.response.data.Title }}</p>
+                <p><em>Director: </em>{{ movieFromServer.response.data.Director }}</p>
+                <p><em>Runtime: </em>{{ movieFromServer.response.data.Runtime }}</p>
+                <p><em>Year: </em>{{ movieFromServer.response.data.Year }}</p>
+                <p><em>Description: </em>{{ movieFromServer.response.data.Description }}</p>
                 <button class="btn btn-success" ng-show="movieFromServer.response.data" ng-click="saveMovie()">Add to Favorites</button>
               </div>
             </div>
